@@ -1,0 +1,7 @@
+# Optional code-quality tools. The application and its tests need only the
+# Python standard library.
+black
+coverage
+flake8
+isort
+mypy

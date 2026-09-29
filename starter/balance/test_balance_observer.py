@@ -37,26 +37,40 @@ class TestLowBalanceAlertObserver(BalanceTestCase):
         self.messages: list[str] = []
 
     def test_alert_triggers_on_low_balance(self) -> None:
-        observer = LowBalanceAlertObserver(threshold=50, output=self.messages.append)
+        observer = LowBalanceAlertObserver(
+            threshold=50, output=self.messages.append
+        )
         self.balance.register_observer(observer)
 
-        self.balance.apply_transaction(Transaction(100, TransactionCategory.INCOME))
+        self.balance.apply_transaction(
+            Transaction(100, TransactionCategory.INCOME)
+        )
         self.assertFalse(observer.alert_triggered)
 
-        self.balance.apply_transaction(Transaction(60, TransactionCategory.EXPENSE))
+        self.balance.apply_transaction(
+            Transaction(60, TransactionCategory.EXPENSE)
+        )
         self.assertTrue(observer.alert_triggered)
 
-        self.balance.apply_transaction(Transaction(100, TransactionCategory.INCOME))
+        self.balance.apply_transaction(
+            Transaction(100, TransactionCategory.INCOME)
+        )
         self.assertFalse(observer.alert_triggered)
 
-        self.balance.apply_transaction(Transaction(60, TransactionCategory.EXPENSE))
+        self.balance.apply_transaction(
+            Transaction(60, TransactionCategory.EXPENSE)
+        )
         self.assertFalse(observer.alert_triggered)
 
-        self.balance.apply_transaction(Transaction(60, TransactionCategory.EXPENSE))
+        self.balance.apply_transaction(
+            Transaction(60, TransactionCategory.EXPENSE)
+        )
         self.assertTrue(observer.alert_triggered)
 
     def test_balance_at_threshold_is_no_alert(self) -> None:
-        observer = LowBalanceAlertObserver(threshold=50, output=self.messages.append)
+        observer = LowBalanceAlertObserver(
+            threshold=50, output=self.messages.append
+        )
         self.balance.register_observer(observer)
 
         self.balance.add_income(50)
@@ -65,7 +79,9 @@ class TestLowBalanceAlertObserver(BalanceTestCase):
         self.assertEqual(self.messages, [])
 
     def test_alert_message(self) -> None:
-        observer = LowBalanceAlertObserver(threshold=100, output=self.messages.append)
+        observer = LowBalanceAlertObserver(
+            threshold=100, output=self.messages.append
+        )
         self.balance.register_observer(observer)
 
         self.balance.add_expense(25)
@@ -88,10 +104,10 @@ class TestPrintObserver(BalanceTestCase):
         self.assertEqual(
             messages,
             [
-                "Applied Transaction($100, category='TransactionCategory.INCOME')"
-                " -> balance: $100.00",
-                "Applied Transaction($30, category='TransactionCategory.EXPENSE')"
-                " -> balance: $70.00",
+                "Applied Transaction($100, "
+                "category='TransactionCategory.INCOME') -> balance: $100.00",
+                "Applied Transaction($30, "
+                "category='TransactionCategory.EXPENSE') -> balance: $70.00",
             ],
         )
 

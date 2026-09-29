@@ -10,7 +10,9 @@ from transaction.transaction_category import TransactionCategory
 class TestTransactionAdapter(unittest.TestCase):
 
     def test_adapter_converts_freelance_income(self) -> None:
-        ext_txn = ExternalFreelanceIncome(500, "INV-12345", "Website development")
+        ext_txn = ExternalFreelanceIncome(
+            500, "INV-12345", "Website development"
+        )
         adapter = TransactionAdapter(ext_txn)
         txn = adapter.to_transaction()
         self.assertEqual(txn, Transaction(500, TransactionCategory.INCOME))
@@ -26,13 +28,17 @@ class TestTransactionAdapter(unittest.TestCase):
         self.assertEqual(balance.get_balance(), 750.5)
 
     def test_unknown_external_type_raises(self) -> None:
-        ext_txn = ExternalFreelanceIncome(500, "INV-12345", "Website development")
+        ext_txn = ExternalFreelanceIncome(
+            500, "INV-12345", "Website development"
+        )
         ext_txn.typ = "refund"
         with self.assertRaisesRegex(ValueError, "refund.*INV-12345"):
             TransactionAdapter(ext_txn).to_transaction()
 
     def test_invalid_external_amount_raises(self) -> None:
-        ext_txn = ExternalFreelanceIncome(-500, "INV-12345", "Website development")
+        ext_txn = ExternalFreelanceIncome(
+            -500, "INV-12345", "Website development"
+        )
         with self.assertRaises(ValueError):
             TransactionAdapter(ext_txn).to_transaction()
 

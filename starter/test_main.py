@@ -34,7 +34,8 @@ class TestMain(unittest.TestCase):
             output,
         )
         self.assertIn(
-            "ALERT: Low balance! $50.00 is below the threshold of $100.00.", output
+            "ALERT: Low balance! $50.00 is below the threshold of $100.00.",
+            output,
         )
         self.assertIn("Undoing the last transaction...", output)
         self.assertIn("Net balance: $175.00", output)

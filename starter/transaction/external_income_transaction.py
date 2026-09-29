@@ -9,7 +9,9 @@ class ExternalFreelanceIncome:
     ``TransactionAdapter`` converts it before the app uses it.
     """
 
-    def __init__(self, amount: float, invoice_id: str, description: str) -> None:
+    def __init__(
+        self, amount: float, invoice_id: str, description: str
+    ) -> None:
         self.amount = amount
         self.invoice_id = invoice_id
         self.description = description

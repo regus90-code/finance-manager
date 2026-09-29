@@ -35,7 +35,9 @@ class PrintObserver(IBalanceObserver):
 
     def update(self, balance: float, transaction: Transaction) -> None:
         """Print balance update message."""
-        self._output(f"Applied {transaction} -> balance: {format_money(balance)}")
+        self._output(
+            f"Applied {transaction} -> balance: {format_money(balance)}"
+        )
 
 
 class LowBalanceAlertObserver(IBalanceObserver):
@@ -50,7 +52,9 @@ class LowBalanceAlertObserver(IBalanceObserver):
         output: Where the alert goes. Defaults to ``print``.
     """
 
-    def __init__(self, threshold: float, output: Callable[[str], None] = print) -> None:
+    def __init__(
+        self, threshold: float, output: Callable[[str], None] = print
+    ) -> None:
         self.threshold = threshold
         self.alert_triggered = False
         self._output = output

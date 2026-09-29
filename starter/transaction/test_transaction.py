@@ -56,7 +56,10 @@ class TestTransaction(unittest.TestCase):
         for amount, error in cases:
             with self.subTest(amount=amount):
                 with self.assertRaises(error):
-                    Transaction(amount, TransactionCategory.INCOME)  # type: ignore
+                    Transaction(
+                        amount,  # type: ignore
+                        TransactionCategory.INCOME,
+                    )
 
     def test_inverse_swaps_category(self) -> None:
         income = Transaction(40, TransactionCategory.INCOME)

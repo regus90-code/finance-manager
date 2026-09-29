@@ -1,4 +1,7 @@
-"""The invoker of the Command pattern: runs commands and keeps undo/redo stacks."""
+"""The invoker of the Command pattern.
+
+Runs commands and keeps the undo/redo stacks.
+"""
 
 from commands.transaction_command import Command
 

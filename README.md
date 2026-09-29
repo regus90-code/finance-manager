@@ -71,12 +71,12 @@ python -m venv .venv
 .venv/Scripts/activate            # Windows; macOS/Linux: source .venv/bin/activate
 pip install -r requirements-dev.txt
 cd starter
-black --check . && isort --check-only . && flake8 . && mypy .
+black --check . && isort --check-only . && flake8 . && pycodestyle . && mypy .
 coverage run --rcfile=../pyproject.toml -m unittest discover
 coverage report --rcfile=../pyproject.toml
 ```
 
-Current results: black, isort, flake8 and mypy (`strict`) report no issues.
+Current results: black, isort, flake8, pycodestyle and mypy (`strict`) report no issues.
 Coverage of the application code is 99 %. The only line not run by the tests
 is the `if __name__ == "__main__"` guard.
 

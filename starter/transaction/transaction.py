@@ -25,9 +25,13 @@ class Transaction:
             ValueError: If ``amount`` is not a positive, finite number.
         """
         if isinstance(amount, bool) or not isinstance(amount, (int, float)):
-            raise TypeError(f"amount must be a number, got {type(amount).__name__}")
+            raise TypeError(
+                f"amount must be a number, got {type(amount).__name__}"
+            )
         if not math.isfinite(amount) or amount <= 0:
-            raise ValueError(f"amount must be positive and finite, got {amount}")
+            raise ValueError(
+                f"amount must be positive and finite, got {amount}"
+            )
         self._amount = amount
         self._category = category
 
@@ -53,7 +57,10 @@ class Transaction:
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Transaction):
             return NotImplemented
-        return (self._amount, self._category) == (other._amount, other._category)
+        return (self._amount, self._category) == (
+            other._amount,
+            other._category,
+        )
 
     def __hash__(self) -> int:
         return hash((self._amount, self._category))

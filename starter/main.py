@@ -38,7 +38,9 @@ def build_transactions() -> list[Transaction]:
     ]
 
     # Create an external income transaction (via Adapter pattern)
-    freelance_income = ExternalFreelanceIncome(1200, "INV-98765", "Mobile App Project")
+    freelance_income = ExternalFreelanceIncome(
+        1200, "INV-98765", "Mobile App Project"
+    )
     adapter = TransactionAdapter(freelance_income)
     return transactions + [adapter.to_transaction()]
 
@@ -46,7 +48,10 @@ def build_transactions() -> list[Transaction]:
 def main() -> None:
     print("Adding transactions...")
     balance = create_balance(
-        [PrintObserver(), LowBalanceAlertObserver(threshold=LOW_BALANCE_THRESHOLD)]
+        [
+            PrintObserver(),
+            LowBalanceAlertObserver(threshold=LOW_BALANCE_THRESHOLD),
+        ]
     )
     history = CommandHistory()
 

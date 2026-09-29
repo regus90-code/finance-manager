@@ -13,7 +13,10 @@ class TransactionCategory(Enum):
 
     @property
     def opposite(self) -> TransactionCategory:
-        """The category that cancels this one out (used to undo transactions)."""
+        """The category that cancels this one out.
+
+        Used to undo transactions.
+        """
         if self is TransactionCategory.INCOME:
             return TransactionCategory.EXPENSE
         return TransactionCategory.INCOME

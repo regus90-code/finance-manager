@@ -31,24 +31,35 @@ class Balance:
     def __init__(self, _key: object = None) -> None:
         """Initialize the balance. Prevent direct instantiation."""
         if _key is not _CREATION_KEY:
-            raise RuntimeError("Balance is a singleton; use Balance.get_instance()")
+            raise RuntimeError(
+                "Balance is a singleton; use Balance.get_instance()"
+            )
         self._balance = 0.0
         self._observers: list[IBalanceObserver] = []
 
     @classmethod
     def get_instance(cls) -> Balance:
-        """Return the single balance, creating it on first use (thread-safe)."""
+        """Return the single balance, creating it on first use.
+
+        Thread-safe.
+        """
         with cls._lock:
             if cls._instance is None:
                 cls._instance = cls(_CREATION_KEY)
             return cls._instance
 
     def reset(self) -> None:
-        """Reset the net balance to zero. Observers are kept and not notified."""
+        """Reset the net balance to zero.
+
+        Observers are kept and not notified.
+        """
         self._balance = 0.0
 
     def register_observer(self, observer: IBalanceObserver) -> None:
-        """Notify ``observer`` of every future change. Registering twice is a no-op."""
+        """Notify ``observer`` of every future change.
+
+        Registering the same observer twice is a no-op.
+        """
         if observer not in self._observers:
             self._observers.append(observer)
 
@@ -70,7 +81,9 @@ class Balance:
 
     def add_expense(self, amount: float) -> None:
         """Subtract expense from the balance."""
-        self.apply_transaction(Transaction(amount, TransactionCategory.EXPENSE))
+        self.apply_transaction(
+            Transaction(amount, TransactionCategory.EXPENSE)
+        )
 
     def apply_transaction(self, transaction: Transaction) -> None:
         """Apply a Transaction object to update the balance.
@@ -87,7 +100,9 @@ class Balance:
         elif transaction.category is TransactionCategory.EXPENSE:
             self._balance -= transaction.amount
         else:
-            raise ValueError(f"Unknown transaction category: {transaction.category!r}")
+            raise ValueError(
+                f"Unknown transaction category: {transaction.category!r}"
+            )
         self._notify(transaction)
 
     def get_balance(self) -> float:

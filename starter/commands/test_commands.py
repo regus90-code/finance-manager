@@ -55,7 +55,9 @@ class TestCommandHistory(unittest.TestCase):
         self.history = CommandHistory()
 
     def apply(self, amount: float, category: TransactionCategory) -> None:
-        command = ApplyTransactionCommand(self.balance, Transaction(amount, category))
+        command = ApplyTransactionCommand(
+            self.balance, Transaction(amount, category)
+        )
         self.history.execute(command)
 
     def test_undo_restores_previous_balances_in_order(self) -> None:
